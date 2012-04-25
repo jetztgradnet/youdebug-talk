@@ -1,0 +1,5 @@
+vm.suspend()
+vm.threads*.dumpThread()
+vm.resume()
+vm.close()
+

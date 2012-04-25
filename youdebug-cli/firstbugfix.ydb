@@ -1,0 +1,7 @@
+vm.breakpoint("net.jetztgrad.buggyweb.MyServlet",35) {
+  println "age=" + age
+  println "setting age to 50"
+  System.out.flush()
+  age = "50"
+  System.out.flush()
+}

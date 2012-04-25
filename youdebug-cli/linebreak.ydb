@@ -1,0 +1,4 @@
+vm.breakpoint("net.jetztgrad.buggyweb.MyServlet",35) {
+  println "at buggy position in net.jetztgrad.buggyweb.MyServlet, line 35"
+  System.out.flush()
+}
