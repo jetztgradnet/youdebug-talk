@@ -1,0 +1,19 @@
+#!/bin/sh
+
+BASEDIR=`dirname $0`
+
+LIBDIRS="$BASEDIR/lib"
+CLASSPATH=
+MAIN="org.kohsuke.youdebug.YouDebug"
+
+for dir in $LIBDIRS; do
+	for jar in $dir/*.jar; do
+		if [ -n "$CLASSPATH" ]; then
+			CLASSPATH="$CLASSPATH:$jar"
+		else
+			 CLASSPATH="$jar"
+		fi
+	done
+done
+
+java $JAVA_OPTS -cp $CLASSPATH $MAIN "$@"
