@@ -1,4 +1,4 @@
-vm.exceptionBreakpoint("java.lang.NumberFormatException") { e ->
-  println "caught number format exception"
+vm.exceptionBreakpoint("java.lang.Exception") { e ->
+  println "caught exception:"
   e.dumpStackTrace(System.out);
 }

@@ -1,0 +1,7 @@
+println "tracing web requests"
+vm.methodEntryBreakpoint("javax.servlet.http.HttpServlet","service") { method ->
+	def request = thread.frame(0).'0'
+	
+	println method
+	println request.getMethod() + " " + request.getRequestURI() 
+}

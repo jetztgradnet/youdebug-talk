@@ -18,7 +18,7 @@ dependencies {
 httpPort = 8081
 
 task wrapper(type: Wrapper) {
-    //gradleVersion = '1.0'
-    gradleVersion = '1.0-milestone-8'
+    gradleVersion = '2.4'
+    //gradleVersion = '1.0-milestone-8'
 }
 

@@ -41,6 +41,13 @@ public class MyServlet extends HttpServlet {
 			out.println("</form></p>");
 			out.println("</body></html>");
 		}
+		catch (Exception e) {
+			out.println("<h3>An error occured:</h3>");
+			out.println("<p><pre>");
+			out.println(e.getClass().getSimpleName() + " " + e.getMessage());
+//			e.printStackTrace(out);
+			out.println("</pre></p>");
+		}
 		finally {
 			try {
 				out.close();

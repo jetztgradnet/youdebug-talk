@@ -1,0 +1,9 @@
+println vm.virtualMachine.name()
+println vm.virtualMachine.description()
+println "#String instances: " + vm.virtualMachine.instanceCounts([vm.ref(String)])[0]
+def firstSuspendedThread = vm.virtualMachine.allThreads().find { thread -> thread.isSuspended() }
+println "JVM is ${firstSuspendedThread ? 'suspended' : 'NOT suspended'}"  
+vm.close()vm.exceptionBreakpoint("java.lang.Exception") { e ->
+  println "caught exception:"
+  e.dumpStackTrace(System.out);
+}

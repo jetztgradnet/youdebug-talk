@@ -1,0 +1,3 @@
+vm.suspend()
+vm.close()
+

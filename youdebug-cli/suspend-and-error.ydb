@@ -1,0 +1,4 @@
+vm.suspend()
+
+// provoke error
+throw new RuntimeException("got you!")

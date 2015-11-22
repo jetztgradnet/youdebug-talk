@@ -1,0 +1,11 @@
+
+vm.classPrepare("*") { type ->
+	String name = type.name();
+	
+	// filter classes 
+	if (name.startsWith('org.gradle')) return
+	
+	println "loaded class $name"
+}
+
+vm.resume()

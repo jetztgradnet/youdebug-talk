@@ -1,68 +1,66 @@
-h1. YouDebug demo
+# YouDebug demo
 
-h2. Build demo app
+## Build demo app
 
-./gradlew war
+	./gradlew --offline war
 
-h2. run demo app in Eclipse debugger
+## run demo app in Eclipse debugger
 start web application "buggyweb" on a servlet runtime
-browse to "http://localhost:8080/buggyweb/MyServlet":http://localhost:8080/buggyweb/MyServlet 
+browse to [http://localhost:8080/buggyweb/MyServlet](http://localhost:8080/buggyweb/MyServlet)
 
-h2. run demo app in Tomcat
+## run demo app in Tomcat
 
-bc. 
-cd $CATALINA_HOME
-bin/catalina.sh jpda start
+	cd $CATALINA_HOME
+	# 8000 is Tomcat's default debug port
+	export DEBUG_PORT=8000
+	bin/catalina.sh jpda start
 
-browse to "http://localhost:8080/buggyweb/MyServlet":http://localhost:8080/buggyweb/MyServlet 
+browse to [http://localhost:8080/buggyweb/MyServlet](http://localhost:8080/buggyweb/MyServlet)
 
-h3. show Tomcat log file
+### show Tomcat log file
 
-bc. 
-tail -30f logs/localhost.`date +%Y-%m-%d`.log
-
-
-h2. Run demo app in Jetty
-
-export GRADLE_OPTS="-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=8001"
-./gradlew jettyRun
-
-browse to "http://localhost:8081/buggyweb/MyServlet":http://localhost:8081/buggyweb/MyServlet
+	tail -30f logs/localhost.`date +%Y-%m-%d`.log
 
 
-h3. line break
+## Run demo app in Jetty
 
-bc. 
-./youdebug -socket 8000 linebreak.ydb
-./youdebug -socket 8001 linebreak.ydb
-
-h3. diagnostics: exception
-
-bc. 
-./youdebug -socket 8000 exception.ydb
-./youdebug -socket 8001 exception.ydb
+	export DEBUG_PORT=8001
+	export GRADLE_OPTS="-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=8001"
+	./gradlew --offline jettyRun
 
 
-h3. diagnostics: parameter check
+browse to [http://localhost:8081/buggyweb/MyServlet](http://localhost:8081/buggyweb/MyServlet)
 
-bc. 
-./youdebug -socket 8000 diagnose.ydb
-./youdebug -socket 8001 diagnose.ydb
+## Exploring YouDebug
 
-h3. First fix
+### threaddump
 
-bc. 
-./youdebug -socket 8000 firstbugfix.ydb
-./youdebug -socket 8001 firstbugfix.ydb
+	./youdebug -socket $DEBUG_PORT threaddump.ydb | more
+	
+### VM Information
 
-h3. Final fix
+	./youdebug -socket $DEBUG_PORT vminfo.ydb
 
-bc. 
-./youdebug -socket 8000 finalbugfix.ydb
-./youdebug -socket 8001 finalbugfix.ydb
+## Diagnosing the bug
 
-h3. threaddump
+### diagnostics: get exception stacktrace
 
-bc. 
-./youdebug -socket 8000 threaddump.ydb
-./youdebug -socket 8001 threaddump.ydb
+	./youdebug -socket $DEBUG_PORT exception.ydb
+
+### set line break
+
+	./youdebug -socket $DEBUG_PORT linebreak.ydb
+
+
+### diagnostics: check parameter value 
+
+	./youdebug -socket $DEBUG_PORT diagnose.ydb
+
+### First fix
+
+	./youdebug -socket $DEBUG_PORT firstbugfix.ydb
+
+### Final fix
+
+	./youdebug -socket $DEBUG_PORT finalbugfix.ydb
+
