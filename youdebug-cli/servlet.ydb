@@ -1,5 +1,5 @@
 println "tracing web requests"
-vm.methodEntryBreakpoint("javax.servlet.http.HttpServlet","service") { method ->
+vm.methodEntryBreakpoint("jakarta.servlet.http.HttpServlet","service") { method ->
 	def request = thread.frame(0).'0'
 	
 	println method

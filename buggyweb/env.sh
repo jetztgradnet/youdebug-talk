@@ -1,3 +1,6 @@
 #!/bin/sh
 
-export GRADLE_OPTS="-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=8001"
+export DEBUG_PORT=5005
+export GRADLE_OPTS="-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=$DEBUG_PORT"
+#export GRADLE_OPTS="-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=$DEBUG_PORT,onjcmd=y"
+
