@@ -1,7 +1,20 @@
-apply plugin: 'war'
-apply plugin: 'eclipse'
-apply plugin: 'eclipse-wtp'
-apply plugin: 'jetty'
+apply plugin: "java-library"
+apply plugin: "org.gretty"
+apply plugin: "war"
+
+buildscript {
+  dependencies {
+    classpath "org.gretty:gretty:4.0.3"
+  }
+  repositories {
+    maven {
+      url "https://plugins.gradle.org/m2/"
+    }
+  }
+}
+
+sourceCompatibility = 11
+targetCompatibility = 11
 
 archivesBaseName = "buggyweb"
 
@@ -10,15 +23,39 @@ repositories {
    mavenCentral()
 }
 
-dependencies {
-    providedCompile "javax.servlet:servlet-api:2.5"
+ext {
+  JETTY_VERSION = '11.0.20'
+
 }
 
-// Jetty HTTP port, when run as gradle jettyRun
-httpPort = 8081
+gretty {
+    inplaceMode='hard'
+    loggingLevel='INFO'
+    contextPath=''
+    // Jetty HTTP port, when run as gradle jettyRun
+    httpPort=8080
+    jetty11Version = JETTY_VERSION
+    
+    jvmArgs = []
+    
+    // dev environment settings
+    jvmArgs << "-Dorg.eclipse.jetty.annotations.LEVEL=OFF"
 
-task wrapper(type: Wrapper) {
-    gradleVersion = '2.4'
-    //gradleVersion = '1.0-milestone-8'
-}
-
+    debugSuspend = false
+    debugPort = 5005
+    
+    /*
+    if (project.hasProperty("delayedDebug")) {
+      if (Boolean.parseBoolean(project.getProperty("delayedDebug"))) {
+        onjcmd = ',onjcmd=y'
+      }
+    }
+    jvmArgs << '-agentlib:jdwp=transport=dt_socket,server=y,suspend=' + suspend + ',address=' + debugPort + onjcmd
+    ',onjcmd=y'
+    */
+    
+    if (rootProject.file('target/jetty/webapp').isFile()) {
+      extraResourceBase rootProject.file('target/jetty/webapp')
+    }
+  }
+  
